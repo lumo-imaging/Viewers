@@ -86,6 +86,8 @@ function initDefaultToolGroup(
       { toolName: toolNames.UltrasoundDirectional },
       { toolName: toolNames.PlanarFreehandROI },
       { toolName: toolNames.SplineROI },
+      // This stores the forensic tool in tools that are not active
+      { toolName: toolNames.ForensicLength },
       { toolName: toolNames.LivewireContour },
       { toolName: toolNames.WindowLevelRegion },
     ],

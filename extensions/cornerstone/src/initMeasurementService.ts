@@ -33,6 +33,7 @@ const initMeasurementService = (
     PlanarFreehandROI,
     SplineROI,
     LivewireContour,
+    ForensicLength,
     Probe,
     UltrasoundDirectional,
   } = measurementServiceMappingsFactory(
@@ -54,7 +55,13 @@ const initMeasurementService = (
     Length.toAnnotation,
     Length.toMeasurement
   );
-
+  measurementService.addMapping(
+    csTools3DVer1MeasurementSource,
+    'ForensicLength',
+    ForensicLength.matchingCriteria,
+    ForensicLength.toAnnotation,
+    ForensicLength.toMeasurement
+  )
   measurementService.addMapping(
     csTools3DVer1MeasurementSource,
     'Crosshairs',

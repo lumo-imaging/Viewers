@@ -1,5 +1,6 @@
 export default [
   'Length',
+  'ForensicLength',
   'EllipticalROI',
   'CircleROI',
   'Bidirectional',
@@ -14,3 +15,4 @@ export default [
   'Probe',
   'UltrasoundDirectionalTool',
 ];
+// this adds forensic tool to the list of supported tools

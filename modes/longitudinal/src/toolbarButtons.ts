@@ -105,6 +105,15 @@ const toolbarButtons: Button[] = [
           commands: setToolActiveToolbar,
           evaluate: 'evaluate.cornerstoneTool',
         }),
+        // This creates the button in the UI, the button is disabled if it is not registered in the measurement service mappings factory
+        createButton({
+          id: 'ForensicLength',
+          icon: 'tool-length',
+          label: 'Forensic Length',
+          tooltip: 'Forensic Length Tool',
+          commands: setToolActiveToolbar,
+          evaluate: 'evaluate.cornerstoneTool',
+        }),
       ],
     },
   },
