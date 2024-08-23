@@ -18,10 +18,8 @@ import {
 import { AnnotationModifiedEventDetail } from '@cornerstonejs/tools/src/types/EventTypes';
 
 interface DistanceParams {
-  src_point: number[];
   trg_point: number[];
-  study_uid: string;
-  sop_instance_id: string;
+  annotation_id: string;
 }
 
 // Define the custom length tool
@@ -39,31 +37,6 @@ class ForensicLengthTool extends LengthTool {
     }
   ) {
     super(toolProps, defaultToolProps);
-  }
-
-  // Override the method for calculating length, method is called in calculateCachedStats in LengthTool.ts
-  // node that pos[1] is x and pos[2] is y
-  _calculateLength(pos1, pos2) {
-    const source = [70.0, 752.0];
-    const target = [Number(roundNumber(source[0] + pos2[0] - pos1[0])), Number(roundNumber(source[1] + pos2[1] - pos1[1]))];
-    const params: DistanceParams = {
-      src_point: source,
-      trg_point: target,
-      study_uid: '1',
-      sop_instance_id: '0'
-    }
-    console.log('event1');
-    const distance = sendDistanceRequest(params).then(response => {
-      console.log(response['distance']);
-      return response[distance];
-    });
-    console.log('event2');
-    // if (typeof response == "number") {
-    //   return undefined;
-    // } else {
-    //   return response['distance'];
-    // }
-    return 0;
   }
 
   _calculateCachedStats(annotation, renderingEngine, enabledElement) {
@@ -93,38 +66,51 @@ class ForensicLengthTool extends LengthTool {
       const index1 = transformWorldToIndex(imageData, worldPos1);
       const index2 = transformWorldToIndex(imageData, worldPos2);
 
-      const length = this._calculateLength(worldPos1, worldPos2);
+      // calculate distance
+      const target = [worldPos2[1], Math.abs(worldPos2[2])];
+      const params: DistanceParams = {
+        trg_point: target,
+        annotation_id: annotation['annotationUID']
+      }
+      let distance;
+      console.log(annotation);
+      sendDistanceRequest(params).then(response => {
+        console.log(response['distance']);
+        distance = response['distance'];
+        super._isInsideVolume(index1, index2, dimensions)
+          ? (this.isHandleOutsideImage = false)
+          : (this.isHandleOutsideImage = true);
 
-      super._isInsideVolume(index1, index2, dimensions)
-        ? (this.isHandleOutsideImage = false)
-        : (this.isHandleOutsideImage = true);
-
-      cachedStats[targetId] = {
-        length,
-        unit: 'cm',
-      };
+        cachedStats[targetId] = {
+          distance,
+          unit: 'cm',
+        };
+        annotation.invalidated = false;
+        triggerAnnotationModified(element, annotation);
+      }); // when this gets resolved, it will re-render the element
+      console.log(annotation);
     }
 
-    annotation.invalidated = false;
-
-
     // Dispatching annotation modified hardcoded because cannot interpret command
-    enabledElement = getEnabledElement(element);
-    const { viewportId, renderingEngineId } = enabledElement;
-    const eventType = 'CORNERSTONE_TOOLS_ANNOTATION_MODIFIED';
-    const changeType = 'HandlesUpdated';
-    const eventDetail: AnnotationModifiedEventDetail = {
-      annotation,
-      viewportId,
-      renderingEngineId,
-      changeType,
-    };
-    triggerEvent(eventTarget, eventType, eventDetail);
+    // triggerAnnotationModified(element, annotation);
 
     return cachedStats;
   }
 }
 
+function triggerAnnotationModified(element, annotation) {
+  let enabledElement = getEnabledElement(element);
+  const { viewportId, renderingEngineId } = enabledElement;
+  const eventType = 'CORNERSTONE_TOOLS_ANNOTATION_MODIFIED';
+  const changeType = 'HandlesUpdated';
+  const eventDetail: AnnotationModifiedEventDetail = {
+    annotation,
+    viewportId,
+    renderingEngineId,
+    changeType,
+  };
+  triggerEvent(eventTarget, eventType, eventDetail);
+}
 
 function sendDistanceRequest(params: DistanceParams) {
   const base_url = 'http://localhost:5000/distance';

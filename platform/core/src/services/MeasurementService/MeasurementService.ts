@@ -549,19 +549,18 @@ class MeasurementService extends PubSubService {
       }
     } else {
       log.info('Measurement started.', newMeasurement);
-      console.log(source, annotationType, sourceAnnotationDetail, isUpdate);
       if (newMeasurement['toolName'] === 'ForensicLength') {
         // this is makeshift to see if the flask backend works, I need to
         // figure out a way to properly translate the coordinates and have a viewer
         // with proper images
         // using temporary point 70, 752 in camera position 0
-        const source_point: number[] = [70.0, 752.0];
-        const camera = 0;
+        const measurement_point = newMeasurement['points'][0];
+        const source_point: number[] = [measurement_point[1], Math.abs(measurement_point[2])];
         const data: SolverData = {
-          'point': source_point,
-          'image': camera,
-          'study_uid': '1',
-          'sop_instance_id': '0',
+          point: source_point,
+          study_uid: newMeasurement['referenceStudyUID'],
+          sop_instance_id: newMeasurement['SOPInstanceUID'],
+          annotation_id: newMeasurement['uid']
         };
         const response = sendSolverRequest(data);
         console.log(response);
