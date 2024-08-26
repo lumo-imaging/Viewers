@@ -1,7 +1,7 @@
 import { SolverData } from './Types';
 
 function sendSolverRequest(data: SolverData) {
-	const url = 'http://localhost:5000/init_solver'
+	const url = 'http://localhost:8000/init_solver'
 
 	fetch(url, {
 		method: "POST",

@@ -559,7 +559,7 @@ class MeasurementService extends PubSubService {
         const data: SolverData = {
           point: source_point,
           study_uid: newMeasurement['referenceStudyUID'],
-          sop_instance_id: newMeasurement['SOPInstanceUID'],
+          instance_id: newMeasurement['SOPInstanceUID'],
           annotation_id: newMeasurement['uid']
         };
         const response = sendSolverRequest(data);
