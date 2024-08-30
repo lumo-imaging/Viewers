@@ -11,7 +11,6 @@ function sendSolverRequest(data: SolverData) {
 		body: JSON.stringify(data)
 	}).then(response => {
 		if (response.ok) {
-			console.log("backend 1", response);
 			return response.json();
 		} else {
 			throw new Error(`Request failed with status ${response.status}. Error ${response.json()}`);

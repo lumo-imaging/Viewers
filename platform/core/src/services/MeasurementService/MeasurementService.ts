@@ -562,8 +562,7 @@ class MeasurementService extends PubSubService {
           instance_id: newMeasurement['SOPInstanceUID'],
           annotation_id: newMeasurement['uid']
         };
-        const response = sendSolverRequest(data);
-        console.log(response);
+        sendSolverRequest(data);
       }
       this.measurements.set(internalUID, newMeasurement);
     }

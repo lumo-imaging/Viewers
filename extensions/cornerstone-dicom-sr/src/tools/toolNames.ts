@@ -3,6 +3,7 @@ import DICOMSRDisplayTool from './DICOMSRDisplayTool';
 const toolNames = {
   DICOMSRDisplay: DICOMSRDisplayTool.toolName,
   SRLength: 'SRLength',
+  SRForensicLength: 'SRForensicLength',
   SRBidirectional: 'SRBidirectional',
   SREllipticalROI: 'SREllipticalROI',
   SRCircleROI: 'SRCircleROI',

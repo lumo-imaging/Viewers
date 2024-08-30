@@ -39,6 +39,7 @@ import {
 import { subscribeToNextViewportGridChange } from './subscribeToNextViewportGridChange';
 import { splitComma, getSplitParam } from './splitComma';
 import { createStudyBrowserTabs } from './createStudyBrowserTabs';
+import downloadForensicCSVReport from './downloadForensicCSVReport';
 
 // Commented out unused functionality.
 // Need to implement new mechanism for derived displaySets using the displaySetManager.
@@ -79,6 +80,7 @@ const utils = {
   debounce,
   roundNumber,
   downloadCSVReport,
+  downloadForensicCSVReport,
   subscribeToNextViewportGridChange,
   splitComma,
   getSplitParam,

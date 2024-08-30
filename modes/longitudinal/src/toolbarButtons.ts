@@ -21,10 +21,11 @@ const toolbarButtons: Button[] = [
       // group evaluate to determine which item should move to the top
       evaluate: 'evaluate.group.promoteToPrimaryIfCornerstoneToolNotActiveInTheList',
       primary: createButton({
-        id: 'Length',
+        // This creates the button in the UI, the button is disabled if it is not registered in the measurement service mappings factory
+        id: 'ForensicLength',
         icon: 'tool-length',
-        label: 'Length',
-        tooltip: 'Length Tool',
+        label: 'Forensic Length',
+        tooltip: 'Forensic Length Tool',
         commands: setToolActiveToolbar,
         evaluate: 'evaluate.cornerstoneTool',
       }),
@@ -33,6 +34,15 @@ const toolbarButtons: Button[] = [
         tooltip: 'More Measure Tools',
       },
       items: [
+        createButton({
+          // This creates the button in the dropdown UI
+          id: 'ForensicLength',
+          icon: 'tool-length',
+          label: 'Forensic Length',
+          tooltip: 'Forensic Length Tool',
+          commands: setToolActiveToolbar,
+          evaluate: 'evaluate.cornerstoneTool',
+        }),
         createButton({
           id: 'Length',
           icon: 'tool-length',
@@ -102,15 +112,6 @@ const toolbarButtons: Button[] = [
           icon: 'icon-tool-livewire',
           label: 'Livewire tool',
           tooltip: 'Livewire tool',
-          commands: setToolActiveToolbar,
-          evaluate: 'evaluate.cornerstoneTool',
-        }),
-        // This creates the button in the UI, the button is disabled if it is not registered in the measurement service mappings factory
-        createButton({
-          id: 'ForensicLength',
-          icon: 'tool-length',
-          label: 'Forensic Length',
-          tooltip: 'Forensic Length Tool',
           commands: setToolActiveToolbar,
           evaluate: 'evaluate.cornerstoneTool',
         }),

@@ -62,7 +62,6 @@ class ForensicLengthTool extends LengthTool {
       }
 
       const { imageData, dimensions } = image;
-
       const index1 = transformWorldToIndex(imageData, worldPos1);
       const index2 = transformWorldToIndex(imageData, worldPos2);
 

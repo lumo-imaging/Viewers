@@ -8,7 +8,7 @@ import { useTrackedMeasurements } from '../../getContextModule';
 import debounce from 'lodash.debounce';
 import { useTranslation } from 'react-i18next';
 
-const { downloadCSVReport } = utils;
+const { downloadCSVReport, downloadForensicCSVReport } = utils;
 const { formatDate } = utils;
 
 const DISPLAY_STUDY_SUMMARY_INITIAL_VALUE = {
@@ -120,6 +120,15 @@ function PanelMeasurementTableTracking({ servicesManager, extensionManager }: wi
     );
 
     downloadCSVReport(trackedMeasurements, measurementService);
+  }
+
+  async function exportForensicReport() {
+    const measurements = measurementService.getMeasurements();
+    const trackedMeasurements = measurements.filter(
+      m => trackedStudy === m.referenceStudyUID && trackedSeries.includes(m.referenceSeriesUID)
+    );
+
+    downloadForensicCSVReport(trackedMeasurements, measurementService);
   }
 
   const jumpToImage = ({ uid, isActive }) => {
@@ -237,6 +246,18 @@ function PanelMeasurementTableTracking({ servicesManager, extensionManager }: wi
           />
         </div>
       )}
+      <div className="flex justify-center">
+        <ActionButtons
+          t={t}
+          actions={[
+            {
+              label: 'Download Forensic CSV',
+              onClick: exportForensicReport,
+            },
+          ]}
+          disabled={disabled}
+        />
+      </div>
     </>
   );
 }

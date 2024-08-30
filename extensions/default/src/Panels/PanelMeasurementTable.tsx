@@ -18,7 +18,7 @@ import createReportDialogPrompt, {
 import createReportAsync from '../Actions/createReportAsync';
 import findSRWithSameSeriesDescription from '../utils/findSRWithSameSeriesDescription';
 
-const { downloadCSVReport } = utils;
+const { downloadCSVReport, downloadForensicCSVReport } = utils;
 
 export default function PanelMeasurementTable({
   servicesManager,
@@ -66,6 +66,12 @@ export default function PanelMeasurementTable({
     const measurements = measurementService.getMeasurements();
 
     downloadCSVReport(measurements, measurementService);
+  }
+
+  async function exportForensicReport() {
+    const measurements = measurementService.getMeasurements();
+
+    downloadForensicCSVReport(measurements, measurementService);
   }
 
   async function clearMeasurements() {
@@ -235,6 +241,10 @@ export default function PanelMeasurementTable({
             {
               label: 'Create Report',
               onClick: createReport,
+            },
+            {
+              label: 'Create Forensic Report',
+              onClick: exportForensicReport,
             },
           ]}
         />
