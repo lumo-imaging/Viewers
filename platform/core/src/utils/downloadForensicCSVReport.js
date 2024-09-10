@@ -1,22 +1,19 @@
-import { DicomMetadataStore } from '../services/DicomMetadataStore/DicomMetadataStore';
+import { DicomMetadataStore } from '../services/DicomMetadataStore/DicomMetadataStore'
 
-export default function downloadForensicCSVReport(measurementData) {
+export default async function downloadForensicCSVReport(measurementData) {
   if (measurementData.length === 0) {
     // Prevent download of report with no measurements.
     return;
   }
 
   const columns = [
-    'Patient ID',
-    'Patient Name',
     'StudyInstanceUID',
-    'SeriesInstanceUID',
     'SOPInstanceUID',
     'Label',
   ];
 
   const reportMap = {};
-  measurementData.forEach(measurement => {
+  for (const measurement of measurementData) {
     const { referenceStudyUID, referenceSeriesUID, getReport, uid } = measurement;
 
     if (!getReport) {
@@ -36,25 +33,28 @@ export default function downloadForensicCSVReport(measurementData) {
     report.columns[2] = 'Centroid X';
     report.columns.push('Centroid Y');
     const points = report.values[2].split(";");
-    console.log(points);
     const point1 = points[0].split(" ");
     point1.shift();
     const point2 = points[1].split(" ");
     point2.shift();
 
-    console.log(point1, point2);
-
     const centroid = midpoint(point1, point2);
-    report.values[2] = centroid[0];
-    report.values.push(centroid[1]);
 
-    console.log(report);
+    const params = {
+      'study_uid': referenceStudyUID,
+      'instance_id': measurement.SOPInstanceUID,
+      'centroid': centroid
+    };
+    const response = await sendCoordinateRequest(params);
+
+    report.values[2] = response['x'];
+    report.values.push(response['y']);
 
     reportMap[uid] = {
       report,
       commonRowItems,
     };
-  });
+  }
   // get columns names inside the report from each measurement and
   // add them to the rows array (this way we can add columns for any custom
   // measurements that may be added in the future)
@@ -69,7 +69,8 @@ export default function downloadForensicCSVReport(measurementData) {
 
   const results = _mapReportsToRowArray(reportMap, columns);
 
-  console.log('mak nug', results);
+  // const report_data = { 'data': results };
+  // const response = await sendReportRequest(report_data);
 
   let csvContent = 'data:text/csv;charset=utf-8,' + results.map(res => res.join(',')).join('\n');
 
@@ -77,7 +78,7 @@ export default function downloadForensicCSVReport(measurementData) {
 }
 
 function midpoint(p1, p2) {
-  return p1.map((value, index) => (parseFloat(value) + parseFloat(p2[index])) / 2);
+  return [(parseFloat(p1[0]) + parseFloat(p2[0])) / 2, -(parseFloat(p1[1]) + parseFloat(p2[1])) / 2]
 }
 
 function _mapReportsToRowArray(reportMap, columns) {
@@ -108,19 +109,16 @@ function _mapReportsToRowArray(reportMap, columns) {
 }
 
 function _getCommonRowItems(measurement, seriesMetadata) {
-  const firstInstance = seriesMetadata.instances[0];
 
   return {
-    'Patient ID': firstInstance.PatientID, // Patient ID
-    'Patient Name': firstInstance.PatientName?.Alphabetic || '', // Patient Name
     StudyInstanceUID: measurement.referenceStudyUID, // StudyInstanceUID
-    SeriesInstanceUID: measurement.referenceSeriesUID, // SeriesInstanceUID
     SOPInstanceUID: measurement.SOPInstanceUID, // SOPInstanceUID
     Label: measurement.label || '', // Label
   };
 }
 
 function _createAndDownloadFile(csvContent) {
+  console.log(csvContent);
   const encodedUri = encodeURI(csvContent);
 
   const link = document.createElement('a');
@@ -128,4 +126,43 @@ function _createAndDownloadFile(csvContent) {
   link.setAttribute('download', 'MeasurementReport.csv');
   document.body.appendChild(link);
   link.click();
+}
+
+function sendCoordinateRequest(params) {
+  const base_url = 'http://localhost:8000/wfov_coordinate';
+  const url_params = new URLSearchParams();
+  for (let key in params) {
+    const val = params[key];
+    console.log(key, val);
+    if (typeof val == "string") {
+      url_params.append(key, val);
+    } else {
+      val.forEach(element => {
+        url_params.append(key, element);
+      });
+    }
+  }
+  const url = `${base_url}?${url_params.toString()}`
+
+  return fetch(url, {
+    method: 'GET',
+  }).then(response => response.json()).catch(error => error);
+}
+
+function sendReportRequest(params) {
+  const base_url = 'http://localhost:8000/report';
+
+  return fetch(base_url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(params)
+  }).then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error(`Request failed with status ${response.status}. Error ${response.json()}`);
+    }
+  });
 }

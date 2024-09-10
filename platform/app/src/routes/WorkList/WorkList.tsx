@@ -421,10 +421,23 @@ function WorkList({
                           name={isValidMode ? 'launch-arrow' : 'launch-info'}
                         />
                       } // launch-arrow | launch-info
-                      onClick={() => { // this adds api call to backend to initialize the camera data for this study
-                        const url = 'http://localhost:8000/init_camera'
-
-                        fetch(url, {
+                      onClick={() => { // this adds api calls to backend to initialize the camera and mediapipe data for this study
+                        const camera_url = 'http://localhost:8000/init_camera'
+                        const mediapipe_url = 'http://localhost:8000/init_mediapipe'
+                        fetch(camera_url, {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({ study_uid: studyInstanceUid })
+                        }).then(response => {
+                          if (response.ok) {
+                            return response.json();
+                          } else {
+                            throw new Error(`Request failed with status ${response.status}. Error ${response.json()}. Could not load camera data.`);
+                          }
+                        });
+                        fetch(mediapipe_url, {
                           method: "POST",
                           headers: {
                             "Content-Type": "application/json",
