@@ -40,15 +40,15 @@ export default async function downloadForensicCSVReport(measurementData) {
 
     const centroid = midpoint(point1, point2);
 
-    const params = {
-      'study_uid': referenceStudyUID,
-      'instance_id': measurement.SOPInstanceUID,
-      'centroid': centroid
-    };
-    const response = await sendCoordinateRequest(params);
+    // const params = {
+    //   'study_uid': referenceStudyUID,
+    //   'instance_id': measurement.SOPInstanceUID,
+    //   'centroid': centroid
+    // };
+    // const response = await sendCoordinateRequest(params);
 
-    report.values[2] = response['x'];
-    report.values.push(response['y']);
+    report.values[2] = centroid[0];
+    report.values.push(centroid[1]);
 
     reportMap[uid] = {
       report,
@@ -68,13 +68,14 @@ export default async function downloadForensicCSVReport(measurementData) {
   });
 
   const results = _mapReportsToRowArray(reportMap, columns);
+  sendReportRequest({ 'data': results });
 
   // const report_data = { 'data': results };
   // const response = await sendReportRequest(report_data);
 
-  let csvContent = 'data:text/csv;charset=utf-8,' + results.map(res => res.join(',')).join('\n');
+  // let csvContent = 'data:text/csv;charset=utf-8,' + results.map(res => res.join(',')).join('\n');
 
-  _createAndDownloadFile(csvContent);
+  // _createAndDownloadFile(csvContent);
 }
 
 function midpoint(p1, p2) {
@@ -150,7 +151,7 @@ function sendCoordinateRequest(params) {
 }
 
 function sendReportRequest(params) {
-  const base_url = 'http://localhost:8000/report';
+  const base_url = 'http://localhost:8000/generate_report';
 
   return fetch(base_url, {
     method: "POST",
