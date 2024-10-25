@@ -1,18 +1,16 @@
 import { eventTarget } from '@cornerstonejs/core';
 import { Enums, annotation } from '@cornerstonejs/tools';
 import { DicomMetadataStore } from '@ohif/core';
+
+import * as CSExtensionEnums from './enums';
 import { toolNames } from './initCornerstoneTools';
 import { onCompletedCalibrationLine } from './tools/CalibrationLineTool';
-
 import measurementServiceMappingsFactory from './utils/measurementServiceMappings/measurementServiceMappingsFactory';
 import getSOPInstanceAttributes from './utils/measurementServiceMappings/utils/getSOPInstanceAttributes';
 
+const { CORNERSTONE_3D_TOOLS_SOURCE_NAME, CORNERSTONE_3D_TOOLS_SOURCE_VERSION } = CSExtensionEnums;
 const { removeAnnotation } = annotation.state;
-
 const csToolsEvents = Enums.Events;
-
-const CORNERSTONE_3D_TOOLS_SOURCE_NAME = 'Cornerstone3DTools';
-const CORNERSTONE_3D_TOOLS_SOURCE_VERSION = '0.1';
 
 const initMeasurementService = (
   measurementService,
@@ -68,11 +66,9 @@ const initMeasurementService = (
     Length.matchingCriteria,
     () => {
       console.warn('Crosshairs mapping not implemented.');
-      return {};
     },
     () => {
       console.warn('Crosshairs mapping not implemented.');
-      return {};
     }
   );
 
@@ -198,11 +194,7 @@ const connectToolsToMeasurementService = (servicesManager: AppTypes.ServicesMana
     cornerstoneViewportService,
     customizationService
   );
-  connectMeasurementServiceToTools(
-    measurementService,
-    cornerstoneViewportService,
-    csTools3DVer1MeasurementSource
-  );
+  connectMeasurementServiceToTools(measurementService, cornerstoneViewportService);
   const { annotationToMeasurement, remove } = csTools3DVer1MeasurementSource;
 
   //
@@ -219,7 +211,7 @@ const connectToolsToMeasurementService = (servicesManager: AppTypes.ServicesMana
         onCompletedCalibrationLine(servicesManager, csToolsEvent)
           .then(
             () => {
-              console.log('calibration applied');
+              console.log('Calibration applied.');
             },
             () => true
           )
@@ -239,7 +231,7 @@ const connectToolsToMeasurementService = (servicesManager: AppTypes.ServicesMana
         annotationToMeasurement(toolName, annotationAddedEventDetail);
       }
     } catch (error) {
-      console.warn('Failed to update measurement:', error);
+      console.warn('Failed to add measurement:', error);
     }
   }
 
@@ -266,6 +258,7 @@ const connectToolsToMeasurementService = (servicesManager: AppTypes.ServicesMana
       console.warn('Failed to update measurement:', error);
     }
   }
+
   function selectMeasurement(csToolsEvent) {
     try {
       const annotationSelectionEventDetail = csToolsEvent.detail;
@@ -285,7 +278,7 @@ const connectToolsToMeasurementService = (servicesManager: AppTypes.ServicesMana
         );
       }
     } catch (error) {
-      console.warn('Failed to select and unselect measurements:', error);
+      console.warn('Failed to select/unselect measurements:', error);
     }
   }
 
@@ -297,20 +290,13 @@ const connectToolsToMeasurementService = (servicesManager: AppTypes.ServicesMana
    */
   function removeMeasurement(csToolsEvent) {
     try {
-      try {
-        const annotationRemovedEventDetail = csToolsEvent.detail;
-        const {
-          annotation: { annotationUID },
-        } = annotationRemovedEventDetail;
-
-        const measurement = measurementService.getMeasurement(annotationUID);
-
-        if (measurement) {
-          console.log('~~ removeEvt', csToolsEvent);
-          remove(annotationUID, annotationRemovedEventDetail);
-        }
-      } catch (error) {
-        console.warn('Failed to update measurement:', error);
+      const annotationRemovedEventDetail = csToolsEvent.detail;
+      const {
+        annotation: { annotationUID },
+      } = annotationRemovedEventDetail;
+      const measurement = measurementService.getMeasurement(annotationUID);
+      if (measurement) {
+        remove(annotationUID, annotationRemovedEventDetail);
       }
     } catch (error) {
       console.warn('Failed to remove measurement:', error);
@@ -334,18 +320,9 @@ const connectToolsToMeasurementService = (servicesManager: AppTypes.ServicesMana
   return csTools3DVer1MeasurementSource;
 };
 
-const connectMeasurementServiceToTools = (
-  measurementService,
-  cornerstoneViewportService,
-  measurementSource
-) => {
+const connectMeasurementServiceToTools = (measurementService, cornerstoneViewportService) => {
   const { MEASUREMENT_REMOVED, MEASUREMENTS_CLEARED, MEASUREMENT_UPDATED, RAW_MEASUREMENT_ADDED } =
     measurementService.EVENTS;
-
-  const csTools3DVer1MeasurementSource = measurementService.getSource(
-    CORNERSTONE_3D_TOOLS_SOURCE_NAME,
-    CORNERSTONE_3D_TOOLS_SOURCE_VERSION
-  );
 
   measurementService.subscribe(MEASUREMENTS_CLEARED, ({ measurements }) => {
     if (!Object.keys(measurements).length) {
@@ -357,7 +334,6 @@ const connectMeasurementServiceToTools = (
       if (source.name !== CORNERSTONE_3D_TOOLS_SOURCE_NAME) {
         continue;
       }
-
       removeAnnotation(uid);
     }
   });

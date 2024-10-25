@@ -9,6 +9,7 @@ import {
 import * as csStreamingImageVolumeLoader from '@cornerstonejs/streaming-image-volume-loader';
 import { Enums as cs3DToolsEnums } from '@cornerstonejs/tools';
 import { Types } from '@ohif/core';
+import Enums from './enums';
 
 import init from './init';
 import getCustomizationModule from './getCustomizationModule';
@@ -39,6 +40,7 @@ import ActiveViewportWindowLevel from './components/ActiveViewportWindowLevel';
 import getSOPInstanceAttributes from './utils/measurementServiceMappings/utils/getSOPInstanceAttributes';
 import { findNearbyToolData } from './utils/findNearbyToolData';
 import { createFrameViewSynchronizer } from './synchronizers/frameViewSynchronizer';
+import { getSopClassHandlerModule } from './getSopClassHandlerModule';
 
 const { helpers: volumeLoaderHelpers } = csStreamingImageVolumeLoader;
 const { getDynamicVolumeInfo } = volumeLoaderHelpers ?? {};
@@ -218,6 +220,7 @@ const cornerstoneExtension: Types.Extensions.Extension = {
       },
     ];
   },
+  getSopClassHandlerModule,
 };
 
 export type { PublicViewportOptions };
@@ -232,5 +235,6 @@ export {
   ImageOverlayViewerTool,
   getSOPInstanceAttributes,
   dicomLoaderService,
+  Enums,
 };
 export default cornerstoneExtension;

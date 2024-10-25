@@ -40,6 +40,7 @@ import { subscribeToNextViewportGridChange } from './subscribeToNextViewportGrid
 import { splitComma, getSplitParam } from './splitComma';
 import { createStudyBrowserTabs } from './createStudyBrowserTabs';
 import downloadForensicCSVReport from './downloadForensicCSVReport';
+import { sopClassDictionary } from './sopClassDictionary';
 
 // Commented out unused functionality.
 // Need to implement new mechanism for derived displaySets using the displaySetManager.
@@ -70,6 +71,7 @@ const utils = {
   Queue,
   isDicomUid,
   isEqualWithin,
+  sopClassDictionary,
   addAccessors,
   resolveObjectPath,
   hierarchicalListUtils,

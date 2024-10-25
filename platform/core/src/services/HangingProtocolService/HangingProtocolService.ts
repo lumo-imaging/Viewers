@@ -4,7 +4,7 @@ import { PubSubService } from '../_shared/pubSubServiceInterface';
 import sortBy from '../../utils/sortBy';
 import ProtocolEngine from './ProtocolEngine';
 import { StudyMetadata } from '../../types/StudyMetadata';
-import IDisplaySet from '../DisplaySetService/IDisplaySet';
+import DisplaySet from '../DisplaySetService/DisplaySet';
 import { CommandsManager } from '../../classes';
 import * as HangingProtocol from '../../types/HangingProtocol';
 import { isDisplaySetFromUrl, sopInstanceLocation } from './custom-attribute/isDisplaySetFromUrl';
@@ -62,7 +62,7 @@ export default class HangingProtocolService extends PubSubService {
   _servicesManager: AppTypes.ServicesManager;
   protocolEngine: ProtocolEngine;
   customViewportSettings = [];
-  displaySets: IDisplaySet[] = [];
+  displaySets: DisplaySet[] = [];
   activeStudy: StudyMetadata;
   debugLogging: false;
 
@@ -394,7 +394,7 @@ export default class HangingProtocolService extends PubSubService {
    *        the studies to display in viewports.
    * @param protocol is a specific protocol to apply.
    */
-  public run({ studies, displaySets, activeStudy }, protocolId) {
+  public run({ studies, displaySets, activeStudy }, protocolId, options = {}) {
     this.studies = [...(studies || this.studies)];
     this.displaySets = displaySets;
     this.setActiveStudyUID((activeStudy || studies[0])?.StudyInstanceUID);
@@ -406,7 +406,7 @@ export default class HangingProtocolService extends PubSubService {
 
     if (protocolId && typeof protocolId === 'string') {
       const protocol = this.getProtocolById(protocolId);
-      this._setProtocol(protocol);
+      this._setProtocol(protocol, options);
       return;
     }
 
@@ -1126,10 +1126,7 @@ export default class HangingProtocolService extends PubSubService {
    * to match display sets to viewports.
    * @returns a display set sort function
    */
-  public getDisplaySetSortFunction(): (
-    displaySetA: IDisplaySet,
-    displaySetB: IDisplaySet
-  ) => number {
+  public getDisplaySetSortFunction(): (displaySetA: DisplaySet, displaySetB: DisplaySet) => number {
     return (displaySetA, displaySetB) => {
       const seriesA = this._getSeriesSortInfoForDisplaySetSort(displaySetA);
       const seriesB = this._getSeriesSortInfoForDisplaySetSort(displaySetB);

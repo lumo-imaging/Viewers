@@ -1,4 +1,4 @@
-export default [
+const supportedTools = [
   'Length',
   'ForensicLength',
   'EllipticalROI',
@@ -12,7 +12,9 @@ export default [
   'PlanarFreehandROI',
   'SplineROI',
   'LivewireContour',
-  'Probe',
   'UltrasoundDirectionalTool',
+  'SCOORD3DPoint',
 ];
 // this adds forensic tool to the list of supported tools
+
+export default supportedTools;

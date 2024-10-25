@@ -139,7 +139,7 @@ function getDisplayText(annotation, displaySet, customizationService, displaySet
 
   const displayTextArray = [];
 
-  const instance = displaySet.images.find(image => image.SOPInstanceUID === SOPInstanceUID);
+  const instance = displaySet.instances.find(image => image.SOPInstanceUID === SOPInstanceUID);
   let InstanceNumber;
   if (instance) {
     InstanceNumber = instance.InstanceNumber;
@@ -149,7 +149,7 @@ function getDisplayText(annotation, displaySet, customizationService, displaySet
   const frameText = displaySet.isMultiFrame ? ` F: ${frameNumber}` : '';
 
   const { SeriesNumber } = displaySet;
-  if (SeriesNumber) {
+  if (SeriesNumber !== undefined) {
     displayTextArray.push(`S: ${SeriesNumber}${instanceText}${frameText}`);
   }
 

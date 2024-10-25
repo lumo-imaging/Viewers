@@ -197,6 +197,8 @@ function initMPRToolGroup(extensionManager, toolGroupService, commandsManager) {
       { toolName: toolNames.Angle },
       { toolName: toolNames.SegmentationDisplay },
       { toolName: toolNames.WindowLevelRegion },
+      { toolName: toolNames.PlanarFreehandROI },
+      { toolName: toolNames.SplineROI },
     ],
     disabled: [
       {

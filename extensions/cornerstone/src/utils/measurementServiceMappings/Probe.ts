@@ -19,11 +19,11 @@ const Probe = {
     getValueTypeFromToolType,
     customizationService
   ) => {
-    const { annotation, viewportId } = csToolsEventDetail;
+    const { annotation } = csToolsEventDetail;
     const { metadata, data, annotationUID } = annotation;
 
     if (!metadata || !data) {
-      console.warn('Length tool: Missing metadata or data');
+      console.warn('Probe tool: Missing metadata or data');
       return null;
     }
 
@@ -163,7 +163,7 @@ function getDisplayText(mappedAnnotations, displaySet, customizationService) {
 
   const { value, unit, SeriesNumber, SOPInstanceUID, frameNumber } = mappedAnnotations[0];
 
-  const instance = displaySet.images.find(image => image.SOPInstanceUID === SOPInstanceUID);
+  const instance = displaySet.instances.find(image => image.SOPInstanceUID === SOPInstanceUID);
 
   let InstanceNumber;
   if (instance) {
