@@ -72,11 +72,16 @@ module.exports = (env, argv) => {
         // Hoisted Yarn Workspace Modules
         path.resolve(__dirname, '../../../node_modules'),
         SRC_DIR,
+
+        path.resolve(__dirname, 'forensic_extension_mode/forensic-measurement-mode/node_modules'),
         path.resolve(
           __dirname,
           'forensic_extension_mode/forensic-measurement-extension/node_modules'
         ),
-        path.resolve(__dirname, 'forensic_extension_mode/forensic-measurement-mode/node_modules'),
+        path.resolve(
+          __dirname,
+          'forensic_extension_mode/forensic-measurement-extension/node_modules'
+        ),
       ],
     },
     plugins: [
