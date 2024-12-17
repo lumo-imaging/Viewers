@@ -2,9 +2,6 @@ import log from '../../log';
 import guid from '../../utils/guid';
 import { PubSubService } from '../_shared/pubSubServiceInterface';
 
-import sendSolverRequest from './ForensicBackend'
-import { SolverData } from './ForensicBackend/Types';
-
 /**
  * Measurement source schema
  *
@@ -548,24 +545,8 @@ class MeasurementService extends PubSubService {
       }
     } else {
       log.info('Measurement started.', newMeasurement);
-      if (newMeasurement['toolName'] === 'ForensicLength') {
-        // this is makeshift to see if the flask backend works, I need to
-        // figure out a way to properly translate the coordinates and have a viewer
-        // with proper images
-        // using temporary point 70, 752 in camera position 0
-        const measurement_point = newMeasurement['points'][0];
-        const source_point: number[] = [measurement_point[1], Math.abs(measurement_point[2])];
-        const data: SolverData = {
-          point: source_point,
-          study_uid: newMeasurement['referenceStudyUID'],
-          instance_id: newMeasurement['SOPInstanceUID'],
-          annotation_id: newMeasurement['uid']
-        };
-        sendSolverRequest(data);
-      }
       this.measurements.set(internalUID, newMeasurement);
     }
-
 
     return newMeasurement.uid;
   }

@@ -1,6 +1,5 @@
 const supportedTools = [
   'Length',
-  'ForensicLength',
   'EllipticalROI',
   'CircleROI',
   'Bidirectional',
@@ -15,6 +14,5 @@ const supportedTools = [
   'UltrasoundDirectionalTool',
   'SCOORD3DPoint',
 ];
-// this adds forensic tool to the list of supported tools
 
 export default supportedTools;

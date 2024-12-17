@@ -39,7 +39,6 @@ import {
 import { subscribeToNextViewportGridChange } from './subscribeToNextViewportGridChange';
 import { splitComma, getSplitParam } from './splitComma';
 import { createStudyBrowserTabs } from './createStudyBrowserTabs';
-import downloadForensicCSVReport from './downloadForensicCSVReport';
 import { sopClassDictionary } from './sopClassDictionary';
 
 // Commented out unused functionality.
@@ -82,7 +81,6 @@ const utils = {
   debounce,
   roundNumber,
   downloadCSVReport,
-  downloadForensicCSVReport,
   subscribeToNextViewportGridChange,
   splitComma,
   getSplitParam,

@@ -122,7 +122,6 @@ function initSRToolGroup(extensionManager, toolGroupService, commandsManager) {
     ],
     passive: [
       { toolName: SRToolNames.SRLength },
-      { toolName: SRToolNames.SRForensicLength },
       { toolName: SRToolNames.SRArrowAnnotate },
       { toolName: SRToolNames.SRBidirectional },
       { toolName: SRToolNames.SREllipticalROI },

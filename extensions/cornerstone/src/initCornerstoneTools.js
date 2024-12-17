@@ -42,7 +42,6 @@ import {
 
 import CalibrationLineTool from './tools/CalibrationLineTool';
 import ImageOverlayViewerTool from './tools/ImageOverlayViewerTool';
-import ForensicLengthTool from './tools/ForensicLengthTool';
 
 export default function initCornerstoneTools(configuration = {}) {
   CrosshairsTool.isAnnotation = false;
@@ -59,7 +58,6 @@ export default function initCornerstoneTools(configuration = {}) {
   addTool(VolumeRotateMouseWheelTool);
   addTool(MIPJumpToClickTool);
   addTool(LengthTool);
-  addTool(ForensicLengthTool);
   addTool(RectangleROITool);
   addTool(RectangleROIThresholdTool);
   addTool(EllipticalROITool);
@@ -115,7 +113,6 @@ const toolNames = {
   VolumeRotateMouseWheel: VolumeRotateMouseWheelTool.toolName,
   MipJumpToClick: MIPJumpToClickTool.toolName,
   Length: LengthTool.toolName,
-  ForensicLength: ForensicLengthTool.toolName,
   DragProbe: DragProbeTool.toolName,
   Probe: ProbeTool.toolName,
   RectangleROI: RectangleROITool.toolName,

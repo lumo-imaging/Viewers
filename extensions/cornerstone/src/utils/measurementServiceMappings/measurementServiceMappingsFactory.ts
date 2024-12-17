@@ -12,7 +12,6 @@ import SplineROI from './SplineROI';
 import LivewireContour from './LivewireContour';
 import Probe from './Probe';
 import UltrasoundDirectional from './UltrasoundDirectional';
-import ForensicLength from './ForensicLength';
 
 const measurementServiceMappingsFactory = (
   measurementService: MeasurementService,
@@ -37,7 +36,6 @@ const measurementServiceMappingsFactory = (
     // You can't define a bidirectional tool as a single type..
     const TOOL_TYPE_TO_VALUE_TYPE = {
       Length: POLYLINE,
-      ForensicLength: POLYLINE,
       EllipticalROI: ELLIPSE,
       CircleROI: CIRCLE,
       RectangleROI: RECTANGLE,
@@ -60,23 +58,6 @@ const measurementServiceMappingsFactory = (
       toAnnotation: Length.toAnnotation,
       toMeasurement: csToolsAnnotation =>
         Length.toMeasurement(
-          csToolsAnnotation,
-          displaySetService,
-          cornerstoneViewportService,
-          _getValueTypeFromToolType,
-          customizationService
-        ),
-      matchingCriteria: [
-        {
-          valueType: MeasurementService.VALUE_TYPES.POLYLINE,
-          points: 2,
-        },
-      ],
-    },
-    ForensicLength: {
-      toAnnotation: ForensicLength.toAnnotation,
-      toMeasurement: csToolsAnnotation =>
-        ForensicLength.toMeasurement(
           csToolsAnnotation,
           displaySetService,
           cornerstoneViewportService,

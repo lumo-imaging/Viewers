@@ -1,7 +1,6 @@
 const toolNames = {
   DICOMSRDisplay: 'DICOMSRDisplay',
   SRLength: 'SRLength',
-  SRForensicLength: 'SRForensicLength',
   SRBidirectional: 'SRBidirectional',
   SREllipticalROI: 'SREllipticalROI',
   SRCircleROI: 'SRCircleROI',

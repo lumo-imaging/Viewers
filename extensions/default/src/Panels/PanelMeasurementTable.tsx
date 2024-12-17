@@ -19,7 +19,7 @@ import createReportAsync from '../Actions/createReportAsync';
 import findSRWithSameSeriesDescription from '../utils/findSRWithSameSeriesDescription';
 import { Separator } from '@ohif/ui-next';
 
-const { downloadCSVReport, downloadForensicCSVReport } = utils;
+const { downloadCSVReport } = utils;
 
 export default function PanelMeasurementTable({
   servicesManager,
@@ -72,11 +72,6 @@ export default function PanelMeasurementTable({
     downloadCSVReport(measurements, measurementService);
   }
 
-  async function exportForensicReport() {
-    const measurements = measurementService.getMeasurements();
-
-    downloadForensicCSVReport(measurements, measurementService);
-  }
 
   async function clearMeasurements() {
     measurementService.clearMeasurements();
@@ -263,10 +258,6 @@ export default function PanelMeasurementTable({
             {
               label: 'Create Report',
               onClick: createReport,
-            },
-            {
-              label: 'Create Forensic Report',
-              onClick: exportForensicReport,
             },
           ]}
         />

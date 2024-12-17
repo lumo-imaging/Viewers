@@ -10,7 +10,7 @@ import { Separator } from '@ohif/ui-next';
 
 import { useTrackedMeasurements } from '../../getContextModule';
 
-const { downloadCSVReport, downloadForensicCSVReport } = utils;
+const { downloadCSVReport } = utils;
 const { formatDate } = utils;
 
 const DISPLAY_STUDY_SUMMARY_INITIAL_VALUE = {
@@ -128,15 +128,6 @@ function PanelMeasurementTableTracking({
       m => trackedStudy === m.referenceStudyUID && trackedSeries.includes(m.referenceSeriesUID)
     );
     downloadCSVReport(trackedMeasurements);
-  }
-
-  async function exportForensicReport() {
-    const measurements = measurementService.getMeasurements();
-    const trackedMeasurements = measurements.filter(
-      m => trackedStudy === m.referenceStudyUID && trackedSeries.includes(m.referenceSeriesUID)
-    );
-
-    downloadForensicCSVReport(trackedMeasurements, measurementService);
   }
 
   const jumpToImage = ({ uid, isActive }) => {
@@ -281,18 +272,6 @@ function PanelMeasurementTableTracking({
           />
         </div>
       )}
-      <div className="flex justify-center">
-        <ActionButtons
-          t={t}
-          actions={[
-            {
-              label: 'Download Forensic CSV',
-              onClick: exportForensicReport,
-            },
-          ]}
-          disabled={disabled}
-        />
-      </div>
     </>
   );
 }

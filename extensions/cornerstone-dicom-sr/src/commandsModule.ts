@@ -18,31 +18,19 @@ const { log } = OHIF;
  *
  */
 const _generateReport = (measurementData, additionalFindingTypes, options = {}) => {
-  console.log(measurementData, additionalFindingTypes);
   const filteredToolState = getFilteredCornerstoneToolState(
     measurementData,
     additionalFindingTypes
   );
   console.log(filteredToolState);
 
-  let forensic;
-  for (let key in filteredToolState) {
-    for (let tool in filteredToolState[key]) {
-      if (tool == "ForensicLength") {
-        forensic = filteredToolState[key][tool];
-      } else if (tool == "Length") {
-        filteredToolState[key][tool] = Object.assign({}, filteredToolState[key][tool], forensic);
-      }
-    }
-  }
-  console.log('updated', filteredToolState);
   const report = MeasurementReport.generateReport(
     filteredToolState,
     metaData,
     utilities.worldToImageCoords,
     options
   );
-  console.log(report);
+
   const { dataset } = report;
 
   // Set the default character set as UTF-8

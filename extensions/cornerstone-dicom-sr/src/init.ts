@@ -11,7 +11,6 @@ import {
   RectangleROITool,
   utilities as csToolsUtils,
 } from '@cornerstonejs/tools';
-import ForensicLengthTool from './../../../extensions/cornerstone/src/tools/ForensicLengthTool';
 import { Types, MeasurementService } from '@ohif/core';
 import { StackViewport } from '@cornerstonejs/core';
 import { Enums as CSExtensionEnums } from '@ohif/extension-cornerstone';
@@ -34,7 +33,6 @@ export default function init({
 
   addToolInstance(toolNames.DICOMSRDisplay, DICOMSRDisplayTool);
   addToolInstance(toolNames.SRLength, LengthTool);
-  addToolInstance(toolNames.SRForensicLength, ForensicLengthTool)
   addToolInstance(toolNames.SRBidirectional, BidirectionalTool);
   addToolInstance(toolNames.SREllipticalROI, EllipticalROITool);
   addToolInstance(toolNames.SRCircleROI, CircleROITool);
@@ -69,7 +67,6 @@ export default function init({
   annotation.config.style.setToolGroupToolStyles('SRToolGroup', {
     [toolNames.DICOMSRDisplay]: dashedLine,
     SRLength: dashedLine,
-    SRForensicLength: dashedLine,
     SRBidirectional: dashedLine,
     SREllipticalROI: dashedLine,
     SRCircleROI: dashedLine,
