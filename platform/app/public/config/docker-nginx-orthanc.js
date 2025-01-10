@@ -57,4 +57,7 @@ window.config = {
   httpErrorHandler: error => {
     console.warn(`HTTP Error Handler (status: ${error.status})`, error);
   },
+  investigationalUseDialog: {
+    option: 'never',
+  },
 };
