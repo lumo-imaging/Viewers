@@ -74,6 +74,22 @@ module.exports = (env, argv) => {
         SRC_DIR,
         path.resolve(__dirname, 'lumo-viewer-extension/forensic_extension/node_modules'),
         path.resolve(__dirname, 'lumo-viewer-mode/forensic_mode/node_modules'),
+        path.resolve(
+          __dirname,
+          '/home/xmh/Lumo/forensic/Viewers/lumo-viewer-extension/forensic_extension/node_modules'
+        ),
+        path.resolve(
+          __dirname,
+          '/home/xmh/Lumo/forensic/Viewers/lumo-viewer-mode/forensic_mode/node_modules'
+        ),
+        path.resolve(
+          __dirname,
+          '/home/xmh/Lumo/forensic/Viewers/lumo-viewer-extension/forensic_extension/node_modules'
+        ),
+        path.resolve(
+          __dirname,
+          '/home/xmh/Lumo/forensic/Viewers/lumo-viewer-mode/forensic_mode/node_modules'
+        ),
       ],
     },
     plugins: [

@@ -16,7 +16,7 @@ const ThumbnailList = ({
   return (
     <div
       id="ohif-thumbnail-list"
-      className="ohif-scrollbar study-min-height overflow-y-hidden bg-black py-5"
+      className="ohif-scrollbar grid grid-cols-3 gap-1 bg-black overflow-y-auto"
     >
       {thumbnails.map(
         ({

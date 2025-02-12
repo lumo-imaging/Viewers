@@ -33,51 +33,51 @@ function ThumbnailTracked({
 
   return (
     <div
-      className={classnames('flex flex-1 cursor-pointer flex-row px-3 outline-none', className)}
+      className={classnames('flex cursor-pointer flex-row ', className)} // Reduced padding from px-3 to px-1
       id={`thumbnail-${displaySetInstanceUID}`}
     >
-      <div className="flex-2 flex flex-col items-center">
-        <div
-          className={classnames(
-            'relative mb-2 flex cursor-pointer flex-col items-center justify-start p-2',
-            isTracked && 'rounded-sm hover:bg-gray-900'
-          )}
-        >
-          <Tooltip
-            position="right"
-            content={
-              <div className="flex flex-1 flex-row">
-                <div className="flex-2 flex items-center justify-center pr-4">
-                  <Icon
-                    name="info-link"
-                    className="text-primary-active"
-                  />
-                </div>
-                <div className="flex flex-1 flex-col">
-                  <span>
-                    <span className="text-white">
-                      {isTracked ? t('Series is tracked') : t('Series is untracked')}
-                    </span>
-                  </span>
-                </div>
-              </div>
-            }
-          >
-            <Icon
-              name={trackedIcon}
-              className="text-primary-light mb-2 w-4"
-            />
-          </Tooltip>
-        </div>
-        {isTracked && (
-          <div onClick={onClickUntrack}>
-            <Icon
-              name="cancel"
-              className="text-primary-active w-4"
-            />
-          </div>
-        )}
-      </div>
+      {/*<div className="flex-2 flex flex-col items-center">*/}
+      {/*  <div*/}
+      {/*    className={classnames(*/}
+      {/*      'relative mb-2 flex cursor-pointer flex-col items-center justify-start p-2',*/}
+      {/*      isTracked && 'rounded-sm hover:bg-gray-900'*/}
+      {/*    )}*/}
+      {/*  >*/}
+      {/*    <Tooltip*/}
+      {/*      position="right"*/}
+      {/*      content={*/}
+      {/*        <div className="flex flex-1 flex-row">*/}
+      {/*          <div className="flex-2 flex items-center justify-center pr-4">*/}
+      {/*            <Icon*/}
+      {/*              name="info-link"*/}
+      {/*              className="text-primary-active"*/}
+      {/*            />*/}
+      {/*          </div>*/}
+      {/*          <div className="flex flex-1 flex-col">*/}
+      {/*            <span>*/}
+      {/*              <span className="text-white">*/}
+      {/*                {isTracked ? t('Series is tracked') : t('Series is untracked')}*/}
+      {/*              </span>*/}
+      {/*            </span>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      }*/}
+      {/*    >*/}
+      {/*      <Icon*/}
+      {/*        name={trackedIcon}*/}
+      {/*        className="text-primary-light mb-2 w-4"*/}
+      {/*      />*/}
+      {/*    </Tooltip>*/}
+      {/*  </div>*/}
+      {/*  {isTracked && (*/}
+      {/*    <div onClick={onClickUntrack}>*/}
+      {/*      <Icon*/}
+      {/*        name="cancel"*/}
+      {/*        className="text-primary-active w-4"*/}
+      {/*      />*/}
+      {/*    </div>*/}
+      {/*  )}*/}
+      {/*</div>*/}
       <Thumbnail
         displaySetInstanceUID={displaySetInstanceUID}
         imageSrc={imageSrc}
