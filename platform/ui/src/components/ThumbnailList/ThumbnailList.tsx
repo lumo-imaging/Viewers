@@ -39,45 +39,50 @@ const ThumbnailList = ({
           isHydratedForDerivedDisplaySet,
         }) => {
           const isActive = activeDisplaySetInstanceUIDs.includes(displaySetInstanceUID);
+          const className = [0,1,3,4,6,7,9,10].includes(seriesNumber) ? "rotate-90" : "-rotate-90";
           switch (componentType) {
             case 'thumbnail':
               return (
-                <Thumbnail
-                  key={displaySetInstanceUID}
-                  displaySetInstanceUID={displaySetInstanceUID}
-                  dragData={dragData}
-                  description={description}
-                  seriesNumber={seriesNumber}
-                  numInstances={numInstances}
-                  countIcon={countIcon}
-                  imageSrc={imageSrc}
-                  imageAltText={imageAltText}
-                  messages={messages}
-                  isActive={isActive}
-                  onClick={() => onThumbnailClick(displaySetInstanceUID)}
-                  onDoubleClick={() => onThumbnailDoubleClick(displaySetInstanceUID)}
-                />
+                <div className={className}>
+                  <Thumbnail
+                    key={displaySetInstanceUID}
+                    displaySetInstanceUID={displaySetInstanceUID}
+                    dragData={dragData}
+                    description={description}
+                    seriesNumber={seriesNumber}
+                    numInstances={numInstances}
+                    countIcon={countIcon}
+                    imageSrc={imageSrc}
+                    imageAltText={imageAltText}
+                    messages={messages}
+                    isActive={isActive}
+                    onClick={() => onThumbnailClick(displaySetInstanceUID)}
+                    onDoubleClick={() => onThumbnailDoubleClick(displaySetInstanceUID)}
+                  />
+                </div>
               );
             case 'thumbnailTracked':
               return (
-                <ThumbnailTracked
-                  key={displaySetInstanceUID}
-                  displaySetInstanceUID={displaySetInstanceUID}
-                  dragData={dragData}
-                  description={description}
-                  seriesNumber={seriesNumber}
-                  numInstances={numInstances}
-                  loadingProgress={loadingProgress}
-                  countIcon={countIcon}
-                  imageSrc={imageSrc}
-                  imageAltText={imageAltText}
-                  messages={messages}
-                  isTracked={isTracked}
-                  isActive={isActive}
-                  onClick={() => onThumbnailClick(displaySetInstanceUID)}
-                  onDoubleClick={() => onThumbnailDoubleClick(displaySetInstanceUID)}
-                  onClickUntrack={() => onClickUntrack(displaySetInstanceUID)}
-                />
+                <div className={className}>
+                  <ThumbnailTracked
+                    key={displaySetInstanceUID}
+                    displaySetInstanceUID={displaySetInstanceUID}
+                    dragData={dragData}
+                    description={description}
+                    seriesNumber={seriesNumber}
+                    numInstances={numInstances}
+                    loadingProgress={loadingProgress}
+                    countIcon={countIcon}
+                    imageSrc={imageSrc}
+                    imageAltText={imageAltText}
+                    messages={messages}
+                    isTracked={isTracked}
+                    isActive={isActive}
+                    onClick={() => onThumbnailClick(displaySetInstanceUID)}
+                    onDoubleClick={() => onThumbnailDoubleClick(displaySetInstanceUID)}
+                    onClickUntrack={() => onClickUntrack(displaySetInstanceUID)}
+                  />
+                </div>
               );
             case 'thumbnailNoImage':
               return (
