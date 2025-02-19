@@ -56,3 +56,8 @@ tests/test-results/
 tests/playwright-report/
 /blob-report/
 /playwright/.cache/
+
+lumo-viewer-extension/
+lumo-viewer-mode/
+
+

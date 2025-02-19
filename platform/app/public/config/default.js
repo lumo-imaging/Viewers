@@ -192,7 +192,7 @@ window.config = {
         },
         React.createElement('img',
           {
-            src: './assets/lumo.svg',
+            src: '../assets/lumo.svg',
             className: 'w-8 h-8',
           }
         ))

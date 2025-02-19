@@ -60,4 +60,23 @@ window.config = {
   investigationalUseDialog: {
     option: 'never',
   },
+  whiteLabeling: {
+    /* Optional: Should return a React component to be rendered in the "Logo" section of the application's Top Navigation bar */
+    createLogoComponentFn: function (React) {
+      return React.createElement(
+        'a',
+        {
+          target: '_self',
+          rel: 'noopener noreferrer',
+          className: 'text-purple-600 line-through',
+          href: '/',
+        },
+        React.createElement('img',
+          {
+            src: '../assets/lumo.svg',
+            className: 'w-8 h-8',
+          }
+        ))
+    },
+  },
 };
