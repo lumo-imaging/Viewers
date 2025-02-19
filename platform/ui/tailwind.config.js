@@ -72,7 +72,6 @@ module.exports = {
       indigo: {
         dark: "#0b2426"
       },
-
       common: {
         bright: '#e1e1e1',
         light: '#a19fad',
