@@ -27,29 +27,50 @@ module.exports = {
       aqua: {
         pale: '#7bb2ce',
       },
-
+      // original color
+      // primary: {
+      //   light: '#5acce6',
+      //   main: '#0944b3',
+      //   dark: '#090c29',
+      //   active: '#348cfd',
+      // },
+      // inputfield: {
+      //   main: '#3a3f99',
+      //   disabled: '#2b166b',
+      //   focus: '#5acce6',
+      //   placeholder: '#39383f',
+      // },
+      //
+      // secondary: {
+      //   light: '#3a3f99',
+      //   main: '#2b166b',
+      //   dark: '#041c4a',
+      //   active: '#1f1f27',
+      // },
+      //
+      // indigo: {
+      //   dark: '#0b1a42',
+      // },
       primary: {
-        light: '#5acce6',
-        main: '#0944b3',
-        dark: '#090c29',
-        active: '#348cfd',
+        light: "#4fd4d9",
+        main: "#0b6f73",
+        dark: "#081b1c",
+        active: "#2ad2da"
       },
       inputfield: {
-        main: '#3a3f99',
-        disabled: '#2b166b',
-        focus: '#5acce6',
-        placeholder: '#39383f',
+        main: "#3a9098",
+        disabled: "#164a4f",
+        focus: "#4fd4d9",
+        placeholder: "#393f3a"
       },
-
       secondary: {
-        light: '#3a3f99',
-        main: '#2b166b',
-        dark: '#041c4a',
-        active: '#1f1f27',
+        light: "#3a9098",
+        main: "#164a4f",
+        dark: "#041f1e",
+        active: "#1f2727"
       },
-
       indigo: {
-        dark: '#0b1a42',
+        dark: "#0b2426"
       },
 
       common: {
